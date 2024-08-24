@@ -1,0 +1,198 @@
+/*b)- Desenvolver um programa que controle as notas bimestrais de 20 alunos de
+uma sala de aula e que efetue o cálculo da média de cada aluno, sendo que será
+considerado aprovado o aluno que obtiver média >= 7.0. O programa em questão
+deverá executar as seguintes rotinas:*/
+
+/*a-cadastrar os 3 alunos e suas notas
+b-classificar os alunos cadastrados
+c-corrigir alunos e/ou notas que tenham sido cadastradas com erros
+e-listar alunos aprovados
+f-listar alunos reprovados  */
+
+#include <stdio.h>
+#include <string.h>
+#include <cstdlib> 
+
+#define QNTD_ALUNOS 3
+#define QNTD_NOTAS 4
+ 
+struct Aluno  {
+	char Nome[40];
+    int Notas[4];
+	int Media;
+};
+
+Aluno estudantes[QNTD_ALUNOS];
+
+
+void cadastrarAlunos() {
+	int i, j;
+		system("cls");
+	for (i=0;i<3;i++) {
+		fflush(stdin);
+	printf("Aluno %i: ", i+1);
+	fgets(estudantes[i].Nome,40, stdin);
+	
+}
+
+   puts("INSIRA A NOTA TIRADA");
+
+   	for (i=0;i<3;i++) {
+   		for (j=0;j<4;j++) { //notas de cada aluno              
+   			printf("Nota do aluno %i: ", i+1);
+   	scanf("%i", &estudantes[i].Notas[j]);
+}
+}
+}
+
+ 
+void definirMedia() {
+	int i, j, k;
+	for(i=0;i<QNTD_ALUNOS;i++) {
+			int soma = 0;
+	for(j=0;j<QNTD_NOTAS;j++)  {
+		soma += estudantes[i].Notas[j];	
+}
+estudantes[i].Media = soma/QNTD_NOTAS;
+}
+}
+
+
+void classificar() {
+	int i, j;
+	Aluno aux;
+	
+	for(i=0;i<QNTD_ALUNOS-1;i++) {
+		for(j= i +1 ;j<QNTD_ALUNOS;j++) {
+		if(strcmp(estudantes[i].Nome , estudantes[j].Nome) > 0) {
+			aux = estudantes[i];
+			estudantes[i] = estudantes[j];
+			estudantes[j] = aux;	
+		}
+		} 
+}
+
+system("cls");
+puts("CADASTROS:"); 
+
+for(i=0;i<QNTD_ALUNOS;i++) {
+	printf("Nome: %s", estudantes[i].Nome);
+	printf("Media: %i \n", estudantes[i].Media);
+	puts("-------------------------");
+}
+}
+
+void aprovados() {
+int i; 
+	system("cls");
+	printf("LISTA DE APROVADOS: \n");
+for(i=0;i<QNTD_ALUNOS;i++) {
+
+if(estudantes[i].Media >= 7) {
+	printf("Nome: %s", estudantes[i].Nome);
+	printf("Media: %i \n", estudantes[i].Media);
+	puts("-------------------------");
+}
+}
+}
+
+void reprovados() {
+int i; 
+	system("cls");
+	printf("LISTA DE REPROVADOS: \n");
+	
+for(i=0;i<QNTD_ALUNOS;i++) {
+if(estudantes[i].Media < 7) {
+	printf("Nome: %s", estudantes[i].Nome);
+	printf("Media: %i \n", estudantes[i].Media);
+	puts("-------------------------");
+}
+}
+}
+
+
+
+void correcao() {
+	int i, j;
+	char boolean;
+	char pesq[40]; 
+	
+	system("cls");
+	
+	puts("INSIRA O NOME DO ALUNO QUE QUEIRA CORRIGIR ");
+	getchar();
+	fgets(pesq,40,stdin);
+	
+	for(i=0;i<QNTD_ALUNOS;i++) {
+	if(strcmp(pesq,estudantes[i].Nome) == 0) {
+	puts("ALUNO ENCONTRADO:");
+	printf("Nome: %s", estudantes[i].Nome);
+	printf("Media: %i \n", estudantes[i].Media);
+	puts("-------------------------");
+	
+	puts("DESEJA CONTINUAR? INFORME S para SIM e N para NÃO");
+	scanf("%c", &boolean);
+	getchar();
+	if(boolean == 'S' || 's') {
+	printf("Aluno %i: ", i+1);
+	fgets(estudantes[i].Nome,40, stdin);
+	puts("INSIRA A NOTA TIRADA");
+   
+   		for (j=0;j<4;j++) { //notas de cada aluno              
+   			printf("Nota do aluno %i: ", i+1);
+   	scanf("%i", &estudantes[i].Notas[j]);
+   	definirMedia();
+}
+}
+}
+}
+}
+
+
+
+
+		
+
+
+int main () { 
+	int i, j, opcao;
+	
+	do {
+	puts("INSIRA 1 PARA CADASTRAMENTO DE ALUNOS");
+	puts("INSIRA 2 PARA CLASSIFICAR ALUNOS CADASTRADOS");
+	puts("INSIRA 3 PARA MOSTRAR LISTA DE ALUNOS APROVADOS");
+	puts("INSIRA 4 PARA MOSTRAR LISTA DE ALUNOS REPROVADOS");
+	puts("INSIRA 5 PARA CORRIGIR ERRO EM CADASTRO");
+	puts("INSIRA 6 PARA SAIR");
+	
+	scanf("%i", &opcao);
+
+switch (opcao) {
+	case(1): {
+	cadastrarAlunos() ;	
+	definirMedia();
+		break;
+	}
+	case(2): {
+	classificar();	
+		break;
+	}
+	case(3): {
+	aprovados();
+		break;
+	}
+	case(4): {
+	reprovados();
+		break;
+	}
+	case(5): {
+		correcao();
+		break;
+	}			
+}
+}
+while(opcao != 6);
+
+}
+
+
